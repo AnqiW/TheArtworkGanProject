@@ -203,7 +203,7 @@
 	}
 
 	h6 {
-		font-size: 0.7em;
+		font-size: 1.86em;
 	}
 
 	@media screen and (max-width: 736px) {
@@ -1400,10 +1400,10 @@
 			}
 
 			#header.alt p {
-				text-transform: uppercase;
+				/*text-transform: uppercase;*/
 				letter-spacing: 0.325rem;
 				font-weight: 400;
-				font-size: 0.8em;
+				font-size: 1.2em;
 				padding: 0 1.25em;
 			}
 
