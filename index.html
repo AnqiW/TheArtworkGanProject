@@ -76,6 +76,8 @@
 						<p>We observed from the training image that our network failed to to capture the underlying features of the artworks, even though Discriminator and Generator are both performing well in terms of their “classification loss”. </p>
 						<p>To enforce the Discriminator to extract the underlying features of artworks, we include an Autoencoder in the Discriminator, so that given an input image batch, the autoencoder tries to encode it to some latent low-dimensional space, then, the discriminator tries to perform classification in this latent feature space. 	</p>
 						<img src = "final_model1.png" width="960" height="500">
+						<p>To accomplish this, we minimize two losses at the same time. Namely the reconstruction loss and GAN loss. Note this two loss provides different gradient direction that both strives to boost GAN performance in human eye. This greatly enhances model diversity of our network.</p>
+						<p>The advantage of this model is to give the discriminator two loss that it can do gradient descent on: the first one is the autoencoder’s  reconstruction loss and the second one is the classification loss. TODO: </p> 
 
 
 						<ul class="actions">
