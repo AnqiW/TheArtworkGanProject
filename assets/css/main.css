@@ -114,7 +114,7 @@
 		@media screen and (max-width: 1280px) {
 
 			body, input, select, textarea {
-				font-size: 16pt;
+				font-size: 20pt;
 			}
 
 		}
@@ -1484,7 +1484,7 @@
 /* Intro */
 
 	#intro {
-		padding: 4em 4em 2em 4em;
+		padding: 4em 4em 20em 20em;
 		background-color: #ffffff;
 		border-radius: 4px;
 		text-align: left;
