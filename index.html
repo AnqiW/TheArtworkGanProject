@@ -67,14 +67,14 @@
 						<img src = "dc_gan.png">
 						<p>However, dc_gan worked well with celeba_face dataset where the main object (human face) and the background are highly distinguishable, main object is centered and structure of each image highly resembles each other. Our trail training on the baseline model didn’t go smoothly. Since the significant difference in the training data, we need to adopt several training scheme: a. Apply different learning rates for discriminator and generator (we found that 1e-5 is a reasonable learning rate for discriminator and 1e-4~5e-4 is a good range for discriminator). b. Inconsistent updates to generator and discriminator (e.g one update to discriminator versus ten updates to discriminator). c. modify the number and size of the filters .</p>
 						<p>After adopting the above training schemes, we finally trained the model till convergence. However the resulted performance is still not desirable. There are two major problems a.The checkerboard artifacts are extremely obvious on the generated images and damages their quality (image 2-1). B. Since the data in wikiart set have significantly complicated structures and the discriminator of our baseline model is very simple, discriminator tends to outwin the generator unless we modify the hyperparameters and adopt training schemes very carefully. </p>
-						<img src = "img2-.png">
+						<img src = "img2-.png" width="600" height="200">
 
 						<h4>iii. Final models</h4>
 						<p>To Solve the two problems raised in Baseline model Section, we came up with two models, each aims to solve one of the above problems.</p>
 						<h3>A. Improved Discriminator: Autoencoder Based Discriminator</h3>
 						<p>We observed from the training image that our network failed to to capture the underlying features of the artworks, even though Discriminator and Generator are both performing well in terms of their “classification loss”. </p>
 						<p>To enforce the Discriminator to extract the underlying features of artworks, we include an Autoencoder in the Discriminator, so that given an input image batch, the autoencoder tries to encode it to some latent low-dimensional space, then, the discriminator tries to perform classification in this latent feature space. 	</p>
-						<img src = "final_model1.png">
+						<img src = "final_model1.png" width="600" height="350">
 
 
 						<ul class="actions">
