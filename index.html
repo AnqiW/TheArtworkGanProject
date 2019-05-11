@@ -60,6 +60,7 @@
 						<h6>II. Approach</h6>
 						<h4>i. Data Preprocessing</h4>
 						<p><u>Normalize and resize</u>: The wikiart dataset only contains raw images of different sizes and resolutions. According to the paper of our baseline model (dc_gan), the recommended input size is 64 X 64. Thus we used center crop and resize to normalize the image dimension. We also normalized the RBG channels to subtract the mean to accelerate the training process. After the preprocessing, we stored the processed data as .pt files for more convenient transferring and usage.</p>
+						<img src = "rococo.png" alt = "Preprocessed Rococo Style Paintings">
 						<p><u>Data augmentation</u>: The wikiart dataset can be categorized in three ways,  according to style, genre and author respectively. When the dataset is categorized by styles like Rococo or Pointillism, the sample size under each style are only from 300-6000. Besides, After we investigate into the pictures and dis some trial trainings, we figured out that the difference of artworks under different styles are too big that we can only train for one specific style each time for training to get good result. Hence, we get only around five thousands samples as our effective training size, and data augmentation is hence necessary. We used random crop to perform data augmentation and gets 4 times more training samples under each style.</p>
 
 						<h4>ii. Baseline model</h4>
