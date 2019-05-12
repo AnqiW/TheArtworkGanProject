@@ -164,7 +164,7 @@
 	 h2, h3, h4, h5, h6 {
 		font-weight: 600;
 		line-height: 1.5;
-		margin: 0 0 80em 80;
+		margin: 0 0 50em 50;
 		/*text-transform: uppercase;*/
 		letter-spacing: 0.375rem;
 	}
@@ -1317,7 +1317,7 @@
 		-webkit-flex-direction: column;
 		-ms-flex-direction: column;
 		flex-direction: column;
-		padding: 8em 0 6em 0;
+		padding: 5em 0 5em 0;
 		background-image: url("../../images/banner.jpg");
 		background-size: cover;
 		background-position: center;
@@ -1465,7 +1465,7 @@
 /* Main */
 
 	#main {
-		padding: 4em 12em 2em 12em;
+		padding: 4em 8em 2em 8em;
 		background-color: #ffffff;
 		border-radius: 16px;
 	}
@@ -1477,7 +1477,7 @@
 		@media screen and (max-width: 736px) {
 
 			#main {
-				padding: 2em 12em 0.1em 12em;
+				padding: 2em 8em 0.1em 8em;
 			}
 
 		}
@@ -1493,7 +1493,7 @@
 /* Intro */
 
 	#intro {
-		padding: 4em 20em 2em 20em;
+		padding: 4em 12em 2em 12em;
 		background-color: #ffffff;
 		border-radius: 4px;
 		text-align: left;
@@ -1510,7 +1510,7 @@
 		@media screen and (max-width: 480px) {
 
 			#intro {
-				padding: 2em 12em 0.1em 12em;
+				padding: 2em 10em 0.1em 10em;
 			}
 
 				#intro p br {
