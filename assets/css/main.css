@@ -1465,7 +1465,7 @@
 /* Main */
 
 	#main {
-		padding: 4em 16em 2em 16em;
+		padding: 4em 12em 2em 12em;
 		background-color: #ffffff;
 		border-radius: 16px;
 	}
@@ -1477,7 +1477,7 @@
 		@media screen and (max-width: 736px) {
 
 			#main {
-				padding: 2em 16em 0.1em 16em;
+				padding: 2em 12em 0.1em 12em;
 			}
 
 		}
@@ -1493,7 +1493,7 @@
 /* Intro */
 
 	#intro {
-		padding: 4em 16em 2em 16em;
+		padding: 4em 12em 2em 12em;
 		background-color: #ffffff;
 		border-radius: 4px;
 		text-align: left;
@@ -1502,7 +1502,7 @@
 		@media screen and (max-width: 736px) {
 
 			#intro {
-				padding: 2em 16em 0.1em 16em;
+				padding: 2em 12em 0.1em 12em;
 			}
 
 		}
@@ -1510,7 +1510,7 @@
 		@media screen and (max-width: 480px) {
 
 			#intro {
-				padding: 2em 16em 0.1em 16em;
+				padding: 2em 12em 0.1em 12em;
 			}
 
 				#intro p br {
