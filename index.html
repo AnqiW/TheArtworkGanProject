@@ -84,6 +84,7 @@
 						<p>The discriminator first tries to learn a latent space that captures all the necessary features which parametrizes the input image; then, based on the latent representation of the input image, the discriminator judges whether the input image is fake or not. Observe that the first step (learning a representation of the input image in a lower-dimensional latent space) coincides with the duty of the decoder component of an autoencoder. Therefore, it is very natural that mixing these two models can boost the performance of the network. </p>
 						<p>In general, these two losses has very different gradient direction, since GAN loss is merely forcing the discriminator to distinguish between real and fake images, whereas the reconstruction loss is enforcing the autoencoder to learn the underlying latent space. As a result, minimizing two losses at the same time adds additional variability to our model. </p>
 						<h4>iii. Training </h4>
+						<pre>
 						<code> class DiscrimAutoencoder(nn.Module):
 									    def __init__(self, nc, ndf):
 									        super(DiscrimAutoencoder, self).__init__()
@@ -134,6 +135,7 @@
 														  x = self.classifier(x)
 														  return x
 									</code>
+								</pre>
 
 									<code>
 										class Generator(nn.Module):
