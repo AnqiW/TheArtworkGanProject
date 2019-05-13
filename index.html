@@ -67,6 +67,7 @@
 						<h4>ii. Baseline model</h4>
 						<p>We tested out our preprocessed data on dcgan model.</p>
 						<img src = "dc_gan.png" width="600" height = 175 >
+						<p>* Image Src: https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html Baseline Model also comes from here.</p>
 						<p>However, dc_gan worked well with celeba_face dataset where the main object (human face) and the background are highly distinguishable, main object is centered and structure of each image highly resembles each other. Our trail training on the baseline model didn’t go smoothly. Since the significant difference in the training data, we need to adopt several training scheme: a. Apply different learning rates for discriminator and generator (we found that 1e-5 is a reasonable learning rate for discriminator and 1e-4~5e-4 is a good range for discriminator). b. Inconsistent updates to generator and discriminator (e.g one update to discriminator versus ten updates to discriminator). c. modify the number and size of the filters .</p>
 						<p>After adopting the above training schemes, we finally trained the model till convergence. However the resulted performance is still not desirable. There are two major problems a.The checkerboard artifacts are extremely obvious on the generated images and damages their quality (image 2-1). B. Since the data in wikiart set have significantly complicated structures and the discriminator of our baseline model is very simple, discriminator tends to outwin the generator unless we modify the hyperparameters and adopt training schemes very carefully. </p>
 						<img src = "img2-.png" width="600" height="240">
@@ -286,6 +287,7 @@ for epoch in range(num_epochs):
 		<h6>III. Improved Generator: Checkerboard smoothout </h6>
 		<p>To solve the problem of checkerboard artifacts in the generated images, we referenced several papers and blogs. The phenomenon is usually due to the undivisible kernel size by the stride in the transpose convolution process. When the stride of the filter can not divide the kernel size, we tend to get the uneven results on the output because of the uneven overlap of the filters. </p>
 		<img src = "stride.png" >
+		<p> * Image Src: https://distill.pub/2016/deconv-checkerboard/ </p>
 		<p>Theoretically, the network should be able to learn to avoid such unevenness by adjusting the corresponding filter weights. However, in practice, it doesn’t seem to be the case when the training samples has a lot of variance. In such case the network struggles to learn the underlying distribution and it is generally harder for it to avoid such unevenness. That is why many people reported the checkerboard effects were more obvious when dealing with picture with bright colors ---- bright colors are rarer, and usually means it is far from the mean of the distribution.</p>
 		<p>This perfectly explains the failure in our baseline model. The stride size is 2 and the kernel size is mostly 3. The DC gan use such setting and still performs well, because it is originally designed to generate human face, which is a distribution with much smaller variance: the structures of human faces are similar and the color range also doesn’t varies much. With small variance the network gets to learn to avoid such behavior by itself. In comparison, when switching to generating art work, it fails since artwork has extremely high variance (similar to the “bright color” effect) Base on such understanding, we propose the following fix:
 </p>
@@ -325,6 +327,8 @@ for epoch in range(num_epochs):
 						<p>In contrast to generating highly structure image, e.g. pictures of face or cat, there is an intrinsic difficulty in generating artworks introduced by large variance in dataset of art works. The high variance can be embodied in the structurally shaped objects in the artwork and background are not usually distinguishable from the depicted object.  This problem can be ameliorated by specializing training set to more structured genre such as portrait or landscape.</p>
 						<p>When training GAN using traditional GAN loss, the Generator is trying to generate best image that can fool the Discriminator. But this does not necessarily imply the generated images looks well in the human eyes, since the discriminator may also behave poorly. We resolved this by adding an Autoencoder and impose an reconstruction loss. This enforces the model to learn a more informative latent representation of artworks. </p>
 
+						<h6>VI. Tools </h6>
+						<p>We used PyTroch as the programming framework for our neural nets, which we prefer for its clarify, and used Amazon EC2 as our computing platform.</p>
 
 						<ul class="actions">
 							<!-- <li><a href="#" class="button big">Learn More</a></li> -->
