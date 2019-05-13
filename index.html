@@ -280,10 +280,28 @@ for epoch in range(num_epochs):
 		</pre>
 		<h4> v. Results </h4>
 		<img src = "loss1.png" >
-		<img src = "result1.png" >
+		<img src = "results1.png" >
 
 		<h6>III. Improved Generator: Checkerboard smoothout </h6>
+		<p>To solve the problem of checkerboard artifacts in the generated images, we referenced several papers and blogs. The phenomenon is usually due to the undivisible kernel size by the stride in the transpose convolution process. When the stride of the filter can not divide the kernel size, we tend to get the uneven results on the output because of the uneven overlap of the filters. </p>
+		<img src = "stride.png" >
+		<p>Theoretically, the network should be able to learn to avoid such unevenness by adjusting the corresponding filter weights. However, in practice, it doesn’t seem to be the case when the training samples has a lot of variance. In such case the network struggles to learn the underlying distribution and it is generally harder for it to avoid such unevenness. That is why many people reported the checkerboard effects were more obvious when dealing with picture with bright colors ---- bright colors are rarer, and usually means it is far from the mean of the distribution.</p>
+		<p>This perfectly explains the failure in our baseline model. The stride size is 2 and the kernel size is mostly 3. The DC gan use such setting and still performs well, because it is originally designed to generate human face, which is a distribution with much smaller variance: the structures of human faces are similar and the color range also doesn’t varies much. With small variance the network gets to learn to avoid such behavior by itself. In comparison, when switching to generating art work, it fails since artwork has extremely high variance (similar to the “bright color” effect) Base on such understanding, we propose the following fix:
+</p>
 
+		<h4>i. Add stride one deconvolution </h4>
+		<p>Distill’s blog suggests to use stride 1 deconvolution. But if we change all layers to stride one deconvolution, the resulting network is much deeper, which we cannot afford based on our limited computation resources. So we first tried to double the network by adding another stride one deconvolution layer after each original deconvolution(transpose convolution) layer. The intuition behind is that each added layer is responsible for “smoothing out” the checkerboard generate before.</p>
+		<img src = "iimage.jpg">
+		<p>But this scheme turned out to be a failure. Such setup actually made the checkerboard effect even more obvious. This shows that the checkerboard signal affects the following stride one deconvolution, as a result the one deconvolution learn to reinforce such signals.</p>
+		<h4>ii. Add convolution layers </h4>
+		<p>We then tried to add another stride one convolution layer after each original deconvolution layer. The intuition is that CONV and DECONV can be viewed as opposite processes. So by adding another CONV after each DECONV we wishes to “undo” the checkerboard effect and smooth out the result.</p>
+		<img src = "iiimage.jpg">
+		<p>This also turned out to be a failure. The checkerboard effect is lighter, but as a result now the network only generate chaotic pattern without a obvious structure. When combined the CONV and DECONV iteratively, the network might struggles to learn a consistent data pipeline. Instead of learning features of different levels in different part of the network, the network now only learned to use intermittent signal to generate chaotic pattern.</p>
+
+		<p>iii. Split the upsample process into three </p>
+		<p>We then tried to get rid of deconvolution entirely and use other methods to do the upsampling. In the original network, the upsampling and convolution and padding is all done together. Now we split them into three process, we use nn.Upsample to  first resize the input, then do ReflectionPad2d, and finally we use convolution to implement the filter-based transformation. By separating upsampling and transformation, we hope to get rid of the checkerboard as now there is no deconv-stride issue anymore. This model gave us satisfying result as we successfully generated smooth images.</p>
+		
+		<p></p>
 
 
 
