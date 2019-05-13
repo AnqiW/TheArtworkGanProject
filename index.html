@@ -76,7 +76,7 @@
 
 						<h6>III. Improved Discriminator: Autoencoder Based Discriminator</h6>
 						<h4>i. Introduction </h4>
-						<p>We observed from the training image that our network failed to to capture the underlying features of the artworks, even though Discriminator and Generator are both performing well in terms of their “classification loss”. </p>
+						<p>We observed from the training image that our network failed to to capture the underlying features of the artworks, even though Discriminator and Generator are both performing well in terms of their “classification loss”. * Inspired by the idea introduced in paper "Improved ArtGAN for Conditional Synthesis of Natural Image and Artwork".</p>
 						<h4>ii. Structure </h4>
 						<p>To enforce the Discriminator to extract the underlying features of artworks, we include an Autoencoder in the Discriminator, so that given an input image batch, the autoencoder tries to encode it to some latent low-dimensional space, then, the discriminator tries to perform classification in this latent feature space. 	</p>
 						<img src = "final_model1.png" width="600" height="290">
@@ -295,11 +295,13 @@ for epoch in range(num_epochs):
 		<h4>i. Add stride one deconvolution </h4>
 		<p>Distill’s blog suggests to use stride 1 deconvolution. But if we change all layers to stride one deconvolution, the resulting network is much deeper, which we cannot afford based on our limited computation resources. So we first tried to double the network by adding another stride one deconvolution layer after each original deconvolution(transpose convolution) layer. The intuition behind is that each added layer is responsible for “smoothing out” the checkerboard generate before.</p>
 		<img src = "iimage.jpg" width = "680" height = "350">
+		<p><* image modified from the original dc_gan image.</p>
 		<p>But this scheme turned out to be a failure. Such setup actually made the checkerboard effect even more obvious. This shows that the checkerboard signal affects the following stride one deconvolution, as a result the one deconvolution learn to reinforce such signals.</p>
 		<img src = "square.png" >
 		<h4>ii. Add convolution layers </h4>
 		<p>We then tried to add another stride one convolution layer after each original deconvolution layer. The intuition is that CONV and DECONV can be viewed as opposite processes. So by adding another CONV after each DECONV we wishes to “undo” the checkerboard effect and smooth out the result.</p>
 		<img src = "iiimage.jpg" width = "680" height = "350">
+		<p><* image modified from the original dc_gan image.</p>
 		<p>This also turned out to be a failure. The checkerboard effect is lighter, but as a result now the network only generate chaotic pattern without a obvious structure. When combined the CONV and DECONV iteratively, the network might struggles to learn a consistent data pipeline. Instead of learning features of different levels in different part of the network, the network now only learned to use intermittent signal to generate chaotic pattern.</p>
 		<img src = "well.png" width = "680" height = "680">
 		<h4>iii. Split the upsample process into three </h4>
