@@ -303,7 +303,7 @@ for epoch in range(num_epochs):
 		<img src = "iiimage.jpg" width = "680" height = "350">
 		<p><* image modified from the original dc_gan image.</p>
 		<p>This also turned out to be a failure. The checkerboard effect is lighter, but as a result now the network only generate chaotic pattern without a obvious structure. When combined the CONV and DECONV iteratively, the network might struggles to learn a consistent data pipeline. Instead of learning features of different levels in different part of the network, the network now only learned to use intermittent signal to generate chaotic pattern.</p>
-		<img src = "well.png" width = "680" height = "680">
+		<img src = "well.png" width = "680">
 		<h4>iii. Split the upsample process into three </h4>
 		<p>We then tried to get rid of deconvolution entirely and use other methods to do the upsampling. In the original network, the upsampling and convolution and padding is all done together. Now we split them into three process, we use nn.Upsample to  first resize the input, then do ReflectionPad2d, and finally we use convolution to implement the filter-based transformation. By separating upsampling and transformation, we hope to get rid of the checkerboard as now there is no deconv-stride issue anymore.</p>
 		<img src = "struct2.png" >
@@ -325,6 +325,8 @@ for epoch in range(num_epochs):
 
 
 
+
+
 						<h6>V. Lessons Learned </h6>
 						<p>In contrast to generating highly structure image, e.g. pictures of face or cat, there is an intrinsic difficulty in generating artworks introduced by large variance in dataset of art works. The high variance can be embodied in the structurally shaped objects in the artwork and background are not usually distinguishable from the depicted object.  This problem can be ameliorated by specializing training set to more structured genre such as portrait or landscape.</p>
 						<p>When training GAN using traditional GAN loss, the Generator is trying to generate best image that can fool the Discriminator. But this does not necessarily imply the generated images looks well in the human eyes, since the discriminator may also behave poorly. We resolved this by adding an Autoencoder and impose an reconstruction loss. This enforces the model to learn a more informative latent representation of artworks. </p>
@@ -332,6 +334,10 @@ for epoch in range(num_epochs):
 						<h6>VI. Tools </h6>
 						<p>We used PyTroch as the programming framework for our neural nets, which we prefer for its clarify, and used Amazon EC2 as our computing platform.</p>
 
+						<h6>VII. Team Contribution</h6>
+						<p>Zitong Yang ⅓: Searched for papers for ideas. Explained searched paper to the group. Analyzed the inconsistency in the performance. Explore appropriate learning rate and learning scheme. Implemented the Autoencoder and Autoencoder based Discriminator. Trained the Auto-gan. </p>
+						<p>ZheKun Luo ⅓: Data preprocessing and augmentation. Generate the genre dataset from CSV file. Implement three de-checkerboard schemes. Implement the combine model and train it.  Codesigned project poster. Designed and made some illustrations for our models .</p>
+						<p>Angie Wang ⅓: Dataset collecting. AWS environment setup. Baseline model training using different schemes. Raised one of the checkerboard removing solution. Organized contents and Codesigned project poster. Website construction, composition and material collection. Designed and made some images for our models and gallery.</p>
 						<ul class="actions">
 							<!-- <li><a href="#" class="button big">Learn More</a></li> -->
 						</ul>
