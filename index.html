@@ -291,16 +291,20 @@ for epoch in range(num_epochs):
 
 		<h4>i. Add stride one deconvolution </h4>
 		<p>Distill’s blog suggests to use stride 1 deconvolution. But if we change all layers to stride one deconvolution, the resulting network is much deeper, which we cannot afford based on our limited computation resources. So we first tried to double the network by adding another stride one deconvolution layer after each original deconvolution(transpose convolution) layer. The intuition behind is that each added layer is responsible for “smoothing out” the checkerboard generate before.</p>
-		<img src = "iimage.jpg">
+		<img src = "iimage.jpg" width = "680" height = "350">
 		<p>But this scheme turned out to be a failure. Such setup actually made the checkerboard effect even more obvious. This shows that the checkerboard signal affects the following stride one deconvolution, as a result the one deconvolution learn to reinforce such signals.</p>
+		<img src = "square.png" >
 		<h4>ii. Add convolution layers </h4>
 		<p>We then tried to add another stride one convolution layer after each original deconvolution layer. The intuition is that CONV and DECONV can be viewed as opposite processes. So by adding another CONV after each DECONV we wishes to “undo” the checkerboard effect and smooth out the result.</p>
-		<img src = "iiimage.jpg">
+		<img src = "iiimage.jpg" width = "680" height = "350">
 		<p>This also turned out to be a failure. The checkerboard effect is lighter, but as a result now the network only generate chaotic pattern without a obvious structure. When combined the CONV and DECONV iteratively, the network might struggles to learn a consistent data pipeline. Instead of learning features of different levels in different part of the network, the network now only learned to use intermittent signal to generate chaotic pattern.</p>
+		<img src = "well.png" >
+		<h4>iii. Split the upsample process into three </h4>
+		<p>We then tried to get rid of deconvolution entirely and use other methods to do the upsampling. In the original network, the upsampling and convolution and padding is all done together. Now we split them into three process, we use nn.Upsample to  first resize the input, then do ReflectionPad2d, and finally we use convolution to implement the filter-based transformation. By separating upsampling and transformation, we hope to get rid of the checkerboard as now there is no deconv-stride issue anymore.</p>
+		<img src = "struct2.png" >
+		<p>This model gave us satisfying result as we successfully generated smooth images.</p>
+		<img src = "result2.png" >
 
-		<p>iii. Split the upsample process into three </p>
-		<p>We then tried to get rid of deconvolution entirely and use other methods to do the upsampling. In the original network, the upsampling and convolution and padding is all done together. Now we split them into three process, we use nn.Upsample to  first resize the input, then do ReflectionPad2d, and finally we use convolution to implement the filter-based transformation. By separating upsampling and transformation, we hope to get rid of the checkerboard as now there is no deconv-stride issue anymore. This model gave us satisfying result as we successfully generated smooth images.</p>
-		
 		<p></p>
 
 
